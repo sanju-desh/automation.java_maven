@@ -2,6 +2,7 @@ package org.automation;
 
 import static org.junit.Assert.assertTrue;
 
+import org.automation.pageObjects.HomePage;
 import org.automation.resources.Base;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -25,8 +26,9 @@ public class AppTest extends Base
     @Test
     public void test() throws IOException, InterruptedException {
         WebDriver driver = initializeDriver();
-        driver.get("https://google.com");
-        Thread.sleep(3000);
+        HomePage homePage = new HomePage(driver);
+        homePage.clickLogin();
+        Thread.sleep(5000);
         driver.close();
     }
 }
