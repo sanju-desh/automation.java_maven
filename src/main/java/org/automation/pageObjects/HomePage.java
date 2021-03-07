@@ -2,7 +2,6 @@ package org.automation.pageObjects;
 
 import org.openqa.selenium.WebDriver;
 import org.automation.objectRepository.HomePageRepo;
-import org.openqa.selenium.WebElement;
 
 public class HomePage {
     WebDriver driver;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="/Users/sanj/IdeaProjects/selenium">
-        <parameter name="email" value=""></parameter>
-        <parameter name="password" value=""></parameter>
+    <test parallel="methods" verbose="2" preserve-order="true" name="/Users/sanj/IdeaProjects/selenium">
+        <parameter name="email" value="christoph.ss@hotmail.com" />
+        <parameter name="password" value="Pulsar#123" />
         <classes>
             <class name="org.automation.loginTest">
             </class>
