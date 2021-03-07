@@ -1,24 +1,31 @@
 package org.automation;
 
-import org.automation.pageObjects.HomePage;
-import org.automation.pageObjects.LoginPage;
+import org.automation.pageObjects.AllObjects;
 import org.automation.resources.Base;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 public class loginTest extends Base {
+    WebDriver driver;
+
+    @BeforeTest
+    public void startDriver() throws IOException {
+        driver = initializeDriver();
+    }
+
     @Parameters({"email","password"})
     @Test
     public void test(String email, String password) throws Exception {
         try {
-            WebDriver driver = initializeDriver();
-            HomePage homePage = new HomePage(driver);
-            LoginPage loginPage = new LoginPage(driver);
-            homePage.clickLogin();
-            loginPage.setEmail(email);
-            loginPage.setPassword(password);
-            loginPage.clickLogin();
+            AllObjects allObjects = new AllObjects(driver);
+            allObjects.homePage.clickLogin();
+            allObjects.loginPage.setEmail(email);
+            allObjects.loginPage.setPassword(password);
+            allObjects.loginPage.clickLogin();
         } catch (Exception e){
             throw new Exception(e);
         } finally {
