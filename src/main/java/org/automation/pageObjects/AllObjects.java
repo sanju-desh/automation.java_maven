@@ -2,7 +2,6 @@ package org.automation.pageObjects;
 
 import org.automation.resources.Base;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
 
 import java.io.IOException;
 
