@@ -2,12 +2,14 @@ package org.automation;
 
 import org.automation.pageObjects.AllObjects;
 import org.automation.resources.Base;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class loginTest extends Base {
+import java.time.LocalDate;
 
+public class loginTest extends Base {
     @Parameters({"email","password"})
     @Test
     public void test(String email, String password) throws Exception {
@@ -17,9 +19,14 @@ public class loginTest extends Base {
             allObjects.loginPage.setEmail(email);
             allObjects.loginPage.setPassword(password);
             allObjects.loginPage.clickLogin();
+            allObjects.homePage.clickLogin();
+            String str = allObjects.loginPage.getLoginPageText();
+            Assert.assertTrue(str.contains("Academy"));
             allObjects.closeDriver();
-        } catch (Exception e){
-            throw new Exception(e);
+        } catch (NoSuchElementException e){
+            System.out.println("Exception 1");;
+        } catch (Exception e) {
+            System.out.println("Exception 2");
         }
     }
 
@@ -34,5 +41,11 @@ public class loginTest extends Base {
         } catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    @Test
+    public static void findDay() {
+        LocalDate date = LocalDate.of(2021, 03, 10);
+        System.out.println(date.getDayOfWeek());
     }
 }

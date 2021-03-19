@@ -29,7 +29,7 @@ public class Base {
     private static String SAUCE_ACCESS_KEY;
     private static String SAUCE_HUB;
 
-    public WebDriver initializeDriver() throws IOException {
+    public String readProperty(String property) throws IOException {
         Properties properties = new Properties();
         String os = System.getProperty("os.name");
         if(os.toLowerCase().contains("window")) {
@@ -43,14 +43,17 @@ public class Base {
             FileInputStream fs = new FileInputStream(propPath);
             properties.load(fs);
         }
+        return properties.getProperty(property);
+    }
 
-        String browserName = properties.getProperty("browser");
-        String remote = properties.getProperty("remote");
+    public WebDriver initializeDriver() throws Exception {
+        String browserName = readProperty("browser");
+        String remote = readProperty("remote");
         log.info("Browser Property selected: " + browserName);
         log.info("Driver Property selected: " + remote);
         if(remote.equals("Sauce")) {
-            SAUCE_USER_ID = properties.getProperty("SAUCE_USER_ID");
-            SAUCE_ACCESS_KEY = properties.getProperty("SAUCE_ACCESS_KEY");
+            SAUCE_USER_ID = readProperty("SAUCE_USER_ID");
+            SAUCE_ACCESS_KEY = readProperty("SAUCE_ACCESS_KEY");
             SAUCE_HUB = "https://"+SAUCE_USER_ID+":"+SAUCE_ACCESS_KEY+"@ondemand.us-west-1.saucelabs.com:443/wd/hub";
             MutableCapabilities sauceOptions = new MutableCapabilities();
             if(browserName.toLowerCase().contains("chrome")) {
@@ -81,23 +84,23 @@ public class Base {
             }
         } else {
             if(browserName.toLowerCase().contains("chrome")) {
-                String driverPath = properties.getProperty("chromedriver");
+                String driverPath = readProperty("chromedriver");
                 System.setProperty("webdriver.chrome.driver", driverPath);
                 driver = new ChromeDriver();
             } else if (browserName.toLowerCase().contains("firefox") || browserName.toLowerCase().contains("gecko")){
-                String driverPath = properties.getProperty("geckodriver");
+                String driverPath = readProperty("geckodriver");
                 System.setProperty("webdriver.gecko.driver", driverPath);
                 driver = new FirefoxDriver();
             } else if (browserName.toLowerCase().contains("safari")){
                 driver = new SafariDriver();
             } else if (browserName.toLowerCase().contains("edge")){
-                String driverPath = properties.getProperty("edgedriver");
+                String driverPath = readProperty("edgedriver");
                 System.setProperty("webdriver.edge.driver", driverPath);
                 driver = new EdgeDriver();
             }
         }
 
-        driver.get(properties.getProperty("baseUrl"));
+        driver.get(readProperty("baseUrl"));
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return driver;
     }

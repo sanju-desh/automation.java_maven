@@ -6,28 +6,34 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.*;
 
 public class search {
 
     @Test
-    public void googleSearch() throws IOException {
+    public void googleSearch() throws Exception {
         WebDriver driver;
         AllObjects allObjects = new AllObjects();
+
         driver = allObjects.getDriver();
         driver.get("https://google.com");
         ArrayList<String> ele = new ArrayList<>();
         ele.add("input");
         ele.add("a");
         for(int i = 0; i < ele.size(); i++) {
-            HashMap<String, String> elements = getElementsList(driver, ele.get(i));
+            Map<String, String> elements = getElementsList(driver, ele.get(i));
             Set s1 = elements.entrySet();
             Iterator it = s1.iterator();
             while(it.hasNext()) {
                 Map.Entry m = (Map.Entry) it.next();
                 System.out.println(m.getKey()+" : "+m.getValue());
             }
+        }
+        driver.findElement(By.cssSelector("input[title='Search']")).sendKeys("Tesla");
+        Thread.sleep(5000);
+        List<WebElement> el = driver.findElements(By.cssSelector("[class*='suggestions'] span"));
+        for(WebElement e : el) {
+            System.out.println(e.getText());
         }
         allObjects.closeDriver();
     }
@@ -46,4 +52,6 @@ public class search {
         }
         return object;
     }
+
+
 }

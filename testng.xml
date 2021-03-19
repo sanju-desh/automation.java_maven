@@ -9,6 +9,10 @@
         <parameter name="password" value="Pulsar#123" />
         <classes>
             <class name="org.automation.loginTest">
+                <methods>
+                    <include name="test"/>
+                    <exclude name="test2" />
+                </methods>
             </class>
         </classes>
     </test>
